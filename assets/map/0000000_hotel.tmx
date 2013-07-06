@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="15" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="0000000旅馆" tilewidth="32" tileheight="32">
+  <image source="0000000_hotel.png" width="256" height="2000"/>
+ </tileset>
+ <layer name="ground" width="30" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztzUVOAwAABMDyLDy4u2uLu+vXOBYvxd3d/QnMkRMhhGM3mePuBgKxxBJLLP+XUsLMMsc8CyyyxDLxcYFAAokkkUwKqXF/+6yhlggrRFlljXU22CTNfjoZZJJFNjnkMvPL/yaaCRJii2122GWPfQ44JM9uPgUUUkQxJZQSZvaH7zba6aCTLro54pgTTjnjnAsuKbNZTgWVVFFNDbVEWCHK6rf/Hnrpo58BBhlimCuuueGWO+554JE6W/U00EgTzQQJscU2O+yyxz4juqOMMc4Ek0wxzRPPvPDKG+988EmLjVbaaKeDTrro5ohjTjjljHO+AH59UxU=
+  </data>
+ </layer>
+ <layer name="wall" width="30" height="15">
+  <properties>
+   <property name="Collidable" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzNzedTD3AcB/BfpKFCESIqDSJbsveeZ94ZT3hm3pl3iqjsEYVQRFJkZK9k3BnP+F/sPV6edZ4a53P3evL93vv9DgoEAo1oTDBNCCGUMDaQTQ4b2UQum9nCS17xmje85R3v+cCSoEBgKctYzgpWEu6vKRFEEkUzmtOCPPIpYCvb2M4OdvKRT3zmC1/5xncC+lexmjWsZR3rifYdQ0taEUtr2tCWXexmD3vZRyH7OfCzWkcjGhNME0IIJYwNZJPDRjaRS5xsO9oTTwc6kkAiRRRzkEMcpoQjHCVcR1MiiCSKZjSnBXnkU8BWtrGdJNlOJJNCKml0pgvHKKWM45ygnJOcIlpHDC1pRSytaUNbdrGbPexlH4Wky3alGxl0pwc96UUFp6nkDFVUc5ZzxOloR3vi6UBHEkikiGIOcojDlNBbtg996Ucm/cliADWc5wIXuUQtl7lCko5OJJNCKml0pgvHKKWM45ygnIGygxjMEIYyjOGM4CrXuM4NbnKL29whXUdXupFBd3rQk15UcJpKzlBFNSNlRzGaMYxlHOOZwF3quEc993nAQx7RW0cf+tKPTPqTxQBqOM8FLnKJWibKTmIyU5jKNKYHfv9G6L/KNa5zg5vcYob/mcxiNnOY+wc2G16dnXvUc58HzPM+nwUs/MN7De+xrSc85RmLvC3+i3u/3nObL4L+4eB/cj8AGlF7/w==
+  </data>
+ </layer>
+</map>
