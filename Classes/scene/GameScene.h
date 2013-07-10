@@ -1,7 +1,7 @@
 #pragma once
 #include "cocos2d.h"
-#include "GameLayer.h"
-#include "HudLayer.h"
+#include "layer/GameLayer.h"
+#include "layer/HudLayer.h"
 class GameScene : public cocos2d::CCScene
 {
 public:

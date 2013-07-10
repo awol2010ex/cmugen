@@ -1,10 +1,9 @@
 #pragma once
 #include "cocos2d.h"
-#include "Pokemon.h"
-//#include "SimpleDPad.h"
-#include "SneakyJoystickExt.h"
+#include "sprite/Ichigo.h"
+#include "Sneaky/SneakyJoystickExt.h"
 #include "HudLayer.h"
-class GameLayer: public cocos2d::CCLayer/*, public SimpleDPadDelegate*/,
+class GameLayer: public cocos2d::CCLayer,
 		public SneakyJoystickDelegate {
 public:
 	GameLayer(void);
@@ -15,7 +14,7 @@ public:
 	//初始化地图
 	void initTileMap();
 	//精灵初始化
-	void initPokemon();
+	void initHero();
 
 	// virtual void ccTouchesBegan(cocos2d::CCSet *pTouches,cocos2d::CCEvent *pEvent);
 	 /*
@@ -39,7 +38,7 @@ public:
 	void reorderActors();
 
 	cocos2d::CCPoint tileCoordForPosition(cocos2d::CCPoint pos); //地图坐标
-	Pokemon *_pokemon; //精灵
+	Ichigo *_hero; //精灵
 	cocos2d::CCSpriteBatchNode *_actors;
 	cocos2d::CCTMXTiledMap *_tileMap; //地图
 

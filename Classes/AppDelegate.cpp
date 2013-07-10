@@ -1,6 +1,6 @@
 #include "CCEGLView.h"
 #include "AppDelegate.h"
-#include "GameScene.h"
+#include "scene/GameScene.h"
 #include "SimpleAudioEngine.h"
 
 USING_NS_CC;

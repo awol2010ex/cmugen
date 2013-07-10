@@ -1,4 +1,4 @@
-#include "Pokemon.h"
+
 #include "GameLayer.h"
 #include "HudLayer.h"
 #include "SimpleAudioEngine.h"
@@ -10,7 +10,7 @@ using namespace cocos2d;
 using namespace CocosDenshion;
 
 GameLayer::GameLayer(void) {
-	_pokemon = NULL;
+	_hero = NULL;
 	_actors = NULL;
 	_tileMap = NULL;
 }
@@ -31,12 +31,12 @@ bool GameLayer::init() {
 		this->initTileMap();
 
 		//batchNodes
-		_actors = CCSpriteBatchNode::create("sprite/charmeleon.png");
+		_actors = CCSpriteBatchNode::create("sprite/cnf.pvr.ccz");
 		_actors->getTexture()->setAliasTexParameters();
 		this->addChild(_actors, -5);
 
 		//初始化精灵
-		this->initPokemon();
+		this->initHero();
 
 		this->scheduleUpdate();
 		bRet = true;
@@ -68,40 +68,40 @@ void GameLayer::initTileMap() {
 	this->addChild(_tileMap, -6);
 }
 //精灵初始化
-void GameLayer::initPokemon() {
+void GameLayer::initHero() {
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-	_pokemon = Pokemon::create();
+	_hero = Ichigo::create();
 
-	_actors->addChild(_pokemon);
-	_pokemon->setPosition(ccp(origin.x+ visibleSize.width/2 ,origin.y+ visibleSize.height/2 -100));
-	_pokemon->setDesiredPosition(_pokemon->getPosition());
+	_actors->addChild(_hero);
+	_hero->setPosition(ccp(origin.x+ visibleSize.width/2 ,origin.y+ visibleSize.height/2 -100));
+	_hero->setDesiredPosition(_hero->getPosition());
 	//站立
-	_pokemon->idle();
+	_hero->idle();
 
 }
 
 //方向
 void GameLayer::didChangeDirectionTo(SneakyJoystickExt *joystick,
 		CCPoint direction) {
-	_pokemon->walkWithDirection(direction);
+	_hero->walkWithDirection(direction);
 }
 //按住
 void GameLayer::isHoldingDirection(SneakyJoystickExt *joystick, CCPoint direction) {
-	_pokemon->walkWithDirection(direction);
+	_hero->walkWithDirection(direction);
 }
 //按完站立
 void GameLayer::simpleJoystickTouchEnded(SneakyJoystickExt *joystick) {
-	if (_pokemon->getActionState() == kActionStateWalk) {
-		_pokemon->idle();
+	if (_hero->getActionState() == kActionStateWalk) {
+		_hero->idle();
 	}
 }
 //实时更新
 void GameLayer::update(float dt) {
-	_pokemon->update(dt);
+	_hero->update(dt);
 	this->updatePositions();//更新所有元素位置
 	this->reorderActors();//前后排序
-	this->setViewpointCenter(_pokemon->getPosition());
+	this->setViewpointCenter(_hero->getPosition());
 }
 
 CCPoint GameLayer::tileCoordForPosition(CCPoint pos) {
@@ -120,14 +120,14 @@ CCPoint GameLayer::tileCoordForPosition(CCPoint pos) {
 void GameLayer::updatePositions() {
 	float posX = MIN(
 			_tileMap->getMapSize().width * _tileMap->getTileSize().width
-					- _pokemon->getCenterToSides()  +_tileMap->getPositionX(),
-			MAX(_pokemon->getCenterToSides()+_tileMap->getPositionX(),
-					_pokemon->getDesiredPosition().x));
+					- _hero->getCenterToSides()  +_tileMap->getPositionX(),
+			MAX(_hero->getCenterToSides()+_tileMap->getPositionX(),
+					_hero->getDesiredPosition().x));
 	float posY = MIN(
 			_tileMap->getMapSize().height * _tileMap->getTileSize().height
-					- _pokemon->getCenterToBottom() +_tileMap->getPositionY(),
-			MAX(_pokemon->getCenterToBottom()+_tileMap->getPositionY(),
-					_pokemon->getDesiredPosition().y));
+					- _hero->getCenterToBottom() +_tileMap->getPositionY(),
+			MAX(_hero->getCenterToBottom()+_tileMap->getPositionY(),
+					_hero->getDesiredPosition().y));
 
 	CCTMXLayer* wall = _tileMap->layerNamed("wall");
 	/* 获得当前主角在地图中的格子位置 */
@@ -138,7 +138,7 @@ void GameLayer::updatePositions() {
 	if (tiledGid != 0) {
 
 	} else {
-		_pokemon->setPosition(ccp(posX, posY));
+		_hero->setPosition(ccp(posX, posY));
 	}
 
 }
@@ -182,10 +182,11 @@ void GameLayer::setMoveDirection(cocos2d::CCPoint _direction)
 
 
 }
+//按A键攻击
 void GameLayer::setInBtnState(InBtnState pBtnState)
 	{
 		if( pBtnState==IN_BTN_PRESSED){
-			_pokemon->attack();
+			_hero->attack();
 		}
 
 	}

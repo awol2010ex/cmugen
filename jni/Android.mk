@@ -7,17 +7,17 @@ LOCAL_MODULE := game_shared
 LOCAL_MODULE_FILENAME := libgame
 
 LOCAL_SRC_FILES := cmugen/main.cpp \
-                   ../Classes/Pokemon.cpp \
+                   ../Classes/sprite/Ichigo.cpp \
                    ../Classes/AppDelegate.cpp \
-                   ../Classes/GameLayer.cpp \
-                   ../Classes/HudLayer.cpp \
-                   ../Classes/ActionSprite.cpp \
-                   ../Classes/GameScene.cpp \
+                   ../Classes/layer/GameLayer.cpp \
+                   ../Classes/layer/HudLayer.cpp \
+                   ../Classes/sprite/ActionSprite.cpp \
+                   ../Classes/scene/GameScene.cpp \
                    ../Classes/Sneaky/SneakyButton.cpp \
                    ../Classes/Sneaky/SneakyButtonSkinnedBase.cpp \
                    ../Classes/Sneaky/SneakyJoystick.cpp \
                    ../Classes/Sneaky/SneakyJoystickSkinnedBase.cpp \
-                   ../Classes/SneakyJoystickExt.cpp 
+                   ../Classes/Sneaky/SneakyJoystickExt.cpp 
                    
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../Classes                   
 

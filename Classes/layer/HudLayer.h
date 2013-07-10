@@ -6,7 +6,7 @@
 #include "Sneaky/SneakyButtonSkinnedBase.h"
 #include "Sneaky/SneakyJoystick.h"
 #include "Sneaky/SneakyJoystickSkinnedBase.h"
-#include "SneakyJoystickExt.h"
+#include "Sneaky/SneakyJoystickExt.h"
 
 
 enum InBtnState {

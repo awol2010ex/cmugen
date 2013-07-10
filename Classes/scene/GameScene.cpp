@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "scene/GameScene.h"
 using namespace cocos2d;
 
 GameScene::GameScene(void) {
@@ -9,7 +9,7 @@ GameScene::GameScene(void) {
 GameScene::~GameScene(void) {//析构
 
 	if(_hudLayer !=NULL){
-	delete _hudLayer;
+	   delete _hudLayer;
 	}
 	if(_gameLayer !=NULL)
 	{
@@ -25,7 +25,7 @@ bool GameScene::init() {
 		//精灵图
 		CCSpriteFrameCache* cache =
 					CCSpriteFrameCache::sharedSpriteFrameCache();
-		cache->addSpriteFramesWithFile("sprite/charmeleon.plist", "sprite/charmeleon.png");
+		cache->addSpriteFramesWithFile("sprite/cnf.plist", "sprite/cnf.pvr.ccz");
 		//UI图
 		cache->addSpriteFramesWithFile("UI.plist", "UI.png");
 
