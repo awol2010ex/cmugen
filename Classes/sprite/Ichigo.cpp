@@ -1,4 +1,4 @@
-#include "Ichigo.h"
+#include "sprite/Ichigo.h"
 #include "SimpleAudioEngine.h"
 using namespace cocos2d;
 

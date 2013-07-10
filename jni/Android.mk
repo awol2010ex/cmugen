@@ -7,11 +7,12 @@ LOCAL_MODULE := game_shared
 LOCAL_MODULE_FILENAME := libgame
 
 LOCAL_SRC_FILES := cmugen/main.cpp \
-                   ../Classes/sprite/Ichigo.cpp \
                    ../Classes/AppDelegate.cpp \
                    ../Classes/layer/GameLayer.cpp \
                    ../Classes/layer/HudLayer.cpp \
                    ../Classes/sprite/ActionSprite.cpp \
+                   ../Classes/sprite/Ichigo.cpp \
+                   ../Classes/sprite/HollowInvasionOne.cpp \
                    ../Classes/scene/GameScene.cpp \
                    ../Classes/Sneaky/SneakyButton.cpp \
                    ../Classes/Sneaky/SneakyButtonSkinnedBase.cpp \

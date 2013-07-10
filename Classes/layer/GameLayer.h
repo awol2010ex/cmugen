@@ -1,8 +1,9 @@
 #pragma once
 #include "cocos2d.h"
 #include "sprite/Ichigo.h"
+#include "sprite/Enemy.h"
 #include "Sneaky/SneakyJoystickExt.h"
-#include "HudLayer.h"
+#include "layer/HudLayer.h"
 class GameLayer: public cocos2d::CCLayer,
 		public SneakyJoystickDelegate {
 public:
@@ -15,16 +16,6 @@ public:
 	void initTileMap();
 	//精灵初始化
 	void initHero();
-
-	// virtual void ccTouchesBegan(cocos2d::CCSet *pTouches,cocos2d::CCEvent *pEvent);
-	 /*
-	 virtual void didChangeDirectionTo(SimpleDPad *simpleDPad,
-	 cocos2d::CCPoint direction);
-	 virtual void isHoldingDirection(SimpleDPad *simpleDPad,
-	 cocos2d::CCPoint direction);
-	 virtual void simpleDPadTouchEnded(SimpleDPad *simpleDPad);
-	 */
-
 	//摇杆代理
 	virtual void didChangeDirectionTo(SneakyJoystickExt *joystick,
 			cocos2d::CCPoint direction);

@@ -1,6 +1,6 @@
 
-#include "GameLayer.h"
-#include "HudLayer.h"
+#include "layer/GameLayer.h"
+#include "layer/HudLayer.h"
 #include "SimpleAudioEngine.h"
 #include <android/log.h>
 
@@ -103,7 +103,7 @@ void GameLayer::update(float dt) {
 	this->reorderActors();//前后排序
 	this->setViewpointCenter(_hero->getPosition());
 }
-
+//地图位置
 CCPoint GameLayer::tileCoordForPosition(CCPoint pos) {
 	CCSize mapTiledNum = _tileMap->getMapSize();
 	CCSize tiledSize = _tileMap->getTileSize();

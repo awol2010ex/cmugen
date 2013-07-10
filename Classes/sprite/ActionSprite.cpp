@@ -1,4 +1,4 @@
-#include "ActionSprite.h"
+#include "sprite/ActionSprite.h"
 #include "SimpleAudioEngine.h"
 using namespace cocos2d;
 
