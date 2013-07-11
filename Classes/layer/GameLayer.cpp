@@ -18,9 +18,9 @@ GameLayer::GameLayer(void) {
 GameLayer::~GameLayer(void) {
 	this->unscheduleUpdate();
 
-	if(_enemys !=NULL){
-	_enemys->release();
-	_enemys =NULL;
+	if (_enemys != NULL) {
+		_enemys->release();
+		_enemys = NULL;
 	}
 }
 
@@ -61,12 +61,11 @@ void GameLayer::initTileMap() {
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+
+	_tileMap->setScale(_tileMap->getContentSize().height / visibleSize.height);
+
 	//位置
-	_tileMap->setPosition(
-			origin.x + visibleSize.width / 2
-					- (_tileMap->getContentSize().width / 2),
-			origin.y + visibleSize.height / 2
-					- (_tileMap->getContentSize().height / 2));
+	_tileMap->setPosition(0,0);
 
 	CCObject *pObject = NULL;
 	CCARRAY_FOREACH(_tileMap->getChildren(), pObject)
@@ -159,42 +158,64 @@ CCPoint GameLayer::tileCoordForPosition(CCPoint pos) {
 //更新位置
 void GameLayer::updatePositions() {
 
-    this->updateHeroPositions();//更新英雄位置
-    this->updateEnemysPositions();//更新敌人位置
+	this->updateHeroPositions(); //更新英雄位置
+	this->updateEnemysPositions(); //更新敌人位置
 }
 //更新英雄位置
-void GameLayer::updateHeroPositions(){
+void GameLayer::updateHeroPositions() {
 	float posX = MIN(
-				_tileMap->getMapSize().width * _tileMap->getTileSize().width
-						- _hero->getCenterToSides() + _tileMap->getPositionX(),
-				MAX(_hero->getCenterToSides() + _tileMap->getPositionX(),
-						_hero->getDesiredPosition().x));
-		float posY = MIN(
-				_tileMap->getMapSize().height * _tileMap->getTileSize().height
-						- _hero->getCenterToBottom() + _tileMap->getPositionY(),
-				MAX(_hero->getCenterToBottom() + _tileMap->getPositionY(),
-						_hero->getDesiredPosition().y));
+			_tileMap->getMapSize().width * _tileMap->getTileSize().width
+					- _hero->getCenterToSides() + _tileMap->getPositionX(),
+			MAX(_hero->getCenterToSides() + _tileMap->getPositionX(),
+					_hero->getDesiredPosition().x));
+	float posY = MIN(
+			_tileMap->getMapSize().height * _tileMap->getTileSize().height
+					- _hero->getCenterToBottom() + _tileMap->getPositionY(),
+			MAX(_hero->getCenterToBottom() + _tileMap->getPositionY(),
+					_hero->getDesiredPosition().y));
 
-		CCTMXLayer* wall = _tileMap->layerNamed("wall");
-		/* 获得当前主角在地图中的格子位置 */
-		CCPoint tiledPos = this->tileCoordForPosition(ccp(posX, posY));
-		/* 获取地图格子的唯一标识 */
-		int tiledGid = wall->tileGIDAt(tiledPos);
-		//LOGD(CCString::createWithFormat("tiledGid%d", tiledGid)->getCString());
-		if (tiledGid != 0) {
+	CCTMXLayer* wall = _tileMap->layerNamed("wall");
+	/* 获得当前主角在地图中的格子位置 */
+	CCPoint tiledPos = this->tileCoordForPosition(ccp(posX, posY));
+	/* 获取地图格子的唯一标识 */
+	int tiledGid = wall->tileGIDAt(tiledPos);
+	//LOGD(CCString::createWithFormat("tiledGid%d", tiledGid)->getCString());
+	if (tiledGid != 0) {
 
-		} else {
-			_hero->setPosition(ccp(posX, posY));
-		}
+	} else {
+		_hero->setPosition(ccp(posX, posY));
+	}
 }
 //更新敌人位置
-void GameLayer::updateEnemysPositions(){
-	    CCObject *pObject = NULL;
-		CCARRAY_FOREACH(_enemys, pObject)
-		{
-			Enemy *_enemy = (Enemy*) pObject;
-			_enemy->setPosition(_enemy->getDesiredPosition());
-		}
+void GameLayer::updateEnemysPositions() {
+	CCObject *pObject = NULL;
+	CCARRAY_FOREACH(_enemys, pObject)
+	{
+		Enemy *_enemy = (Enemy*) pObject;
+		//_enemy->setPosition(_enemy->getDesiredPosition());
+		float posX = MIN(
+					_tileMap->getMapSize().width * _tileMap->getTileSize().width
+							- _enemy->getCenterToSides() + _tileMap->getPositionX(),
+					MAX(_enemy->getCenterToSides() + _tileMap->getPositionX(),
+							_enemy->getDesiredPosition().x));
+			float posY = MIN(
+					_tileMap->getMapSize().height * _tileMap->getTileSize().height
+							- _enemy->getCenterToBottom() + _tileMap->getPositionY(),
+					MAX(_enemy->getCenterToBottom() + _tileMap->getPositionY(),
+							_enemy->getDesiredPosition().y));
+
+			CCTMXLayer* wall = _tileMap->layerNamed("wall");
+			/* 获得当前主角在地图中的格子位置 */
+			CCPoint tiledPos = this->tileCoordForPosition(ccp(posX, posY));
+			/* 获取地图格子的唯一标识 */
+			int tiledGid = wall->tileGIDAt(tiledPos);
+			//LOGD(CCString::createWithFormat("tiledGid%d", tiledGid)->getCString());
+			if (tiledGid != 0) {
+
+			} else {
+				_enemy->setPosition(ccp(posX, posY));
+			}
+	}
 }
 //更新地图位置
 void GameLayer::setViewpointCenter(CCPoint position) {
@@ -245,66 +266,62 @@ void GameLayer::setInBtnState(InBtnState pBtnState) {
 }
 //更新敌人状态
 void GameLayer::updateEnemys(float dt) {
-	float distanceSQ =0; //距离
+	float distanceSQ = 0; //距离
 	int randomChoice = 0;
 	CCObject *pObject = NULL;
 
-	Enemy *_enemy  =NULL;
-	int p=0;
+	Enemy *_enemy = NULL;
+	int p = 0;
 	CCARRAY_FOREACH(_enemys, pObject)
 	{
-		_enemy= dynamic_cast<Enemy*>( pObject);
+		_enemy = dynamic_cast<Enemy*>(pObject);
 		_enemy->update(dt);
 
-		if (_enemy->getActionState() != kActionStateKnockedOut){//还没死
-
+		if (_enemy->getActionState() != kActionStateKnockedOut) { //还没死
 
 			//2
 			if (CURTIME > _enemy->getNextDecisionTime()) {
-							distanceSQ = ccpDistanceSQ(_enemy->getPosition(),
-									_hero->getPosition());
+				distanceSQ = ccpDistanceSQ(_enemy->getPosition(),
+						_hero->getPosition());
 
-							if (_hero->getPosition().x > _enemy->getPosition().x) {
-								_enemy->setScaleX(1.0);
-							} else {
-								_enemy->setScaleX(-1.0);
-							}
-							//3
-							if (distanceSQ <= 50 * 50) {
+				if (_hero->getPosition().x > _enemy->getPosition().x) {
+					_enemy->setScaleX(1.0);
+				} else {
+					_enemy->setScaleX(-1.0);
+				}
+				//3
+				if (distanceSQ <= 50 * 50) {
 
+					_enemy->setNextDecisionTime(
+							CURTIME + frandom_range(0.1, 0.5) * 1000.0);
+					randomChoice = random_range(0, 1);
 
+					if (randomChoice == 0) {
 
-								_enemy->setNextDecisionTime(
-										CURTIME + frandom_range(0.1, 0.5) * 1000.0);
-								randomChoice = random_range(0, 1);
+						//4
+						_enemy->setNextDecisionTime(
+								_enemy->getNextDecisionTime() + frandom_range(0.1, 0.5) * 2000);
 
-
-
-								if (randomChoice == 0) {
-
-
-									//4
-									_enemy->setNextDecisionTime(_enemy->getNextDecisionTime() + frandom_range(0.1, 0.5) * 2000);
-
-								} else {
-									_enemy->idle();
 								}
-							}else if (distanceSQ <= SCREEN.width * SCREEN.width)
-							{
+else					{
+						_enemy->idle();
+					}
+				} else if (distanceSQ <= SCREEN.width * SCREEN.width)
+				{
 
-								//5
-								_enemy->setNextDecisionTime(
-										CURTIME + frandom_range(0.5, 1.0) * 1000.0);
-								randomChoice = random_range(0, 2);
-								if (randomChoice == 0) {
-									CCPoint moveDirection = ccpNormalize(
-											ccpSub(_hero->getPosition(),
-													_enemy->getPosition()));
-									_enemy->walkWithDirection(moveDirection);
-								} else {
-									_enemy->idle();
-								}
-							}
+					//5
+					_enemy->setNextDecisionTime(
+							CURTIME + frandom_range(0.5, 1.0) * 1000.0);
+					randomChoice = random_range(0, 2);
+					if (randomChoice == 0) {
+						CCPoint moveDirection = ccpNormalize(
+								ccpSub(_hero->getPosition(),
+										_enemy->getPosition()));
+						_enemy->walkWithDirection(moveDirection);
+					} else {
+						_enemy->idle();
+					}
+				}
 			}
 
 		}
