@@ -16,5 +16,6 @@ public:
 	//操作层
 	CC_SYNTHESIZE(HudLayer*, _hudLayer, HudLayer);
 
+	//两个层通讯
 	void broadcastInput(float dt);
 };

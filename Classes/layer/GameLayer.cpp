@@ -18,7 +18,10 @@ GameLayer::GameLayer(void) {
 GameLayer::~GameLayer(void) {
 	this->unscheduleUpdate();
 
+	if(_enemys !=NULL){
+	_enemys->release();
 	_enemys =NULL;
+	}
 }
 
 // on "init" you need to initialize your instance

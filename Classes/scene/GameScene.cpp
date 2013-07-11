@@ -9,11 +9,11 @@ GameScene::GameScene(void) {
 GameScene::~GameScene(void) {//析构
 
 	if(_hudLayer !=NULL){
-	   delete _hudLayer;
+	   _hudLayer =NULL;
 	}
 	if(_gameLayer !=NULL)
 	{
-	   delete _gameLayer;
+	   _gameLayer =NULL;
 	}
 }
 
