@@ -28,6 +28,11 @@ public:
 	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _walkAction, WalkAction);
 	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _hurtAction, HurtAction);
 	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _knockedOutAction, KnockedOutAction);
+	
+	//攻击效果
+	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _attackHitAction, AttackHitAction);
+	CC_SYNTHESIZE_RETAIN(cocos2d::CCSprite*, _hitSprite, HitSprite);
+	//
 
 	//states
 	CC_SYNTHESIZE(ActionState, _actionState, ActionState);

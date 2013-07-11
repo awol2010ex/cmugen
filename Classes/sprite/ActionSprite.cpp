@@ -9,6 +9,10 @@ ActionSprite::ActionSprite(void)
 	_walkAction = NULL;
 	_hurtAction = NULL;
 	_knockedOutAction = NULL;
+	
+	//攻击效果
+	_hitSprite =NULL;
+	_attackHitAction=NULL;
 }
 
 ActionSprite::~ActionSprite(void)
@@ -31,7 +35,14 @@ void ActionSprite::attack()
 	if (_actionState == kActionStateIdle || _actionState == kActionStateAttack || _actionState == kActionStateWalk)
 	{
 		this->stopAllActions();
+		
+		if(this->getHitSprite())this->getHitSprite()->stopAllActions();//停止攻击效果
+		
 		this->runAction(_attackAction);
+		
+		if(this->getHitSprite())this->getHitSprite()->runAction(this->getAttackHitAction());//攻击效果
+		
+		
 		_actionState = kActionStateAttack;
 	}
 }
@@ -56,6 +67,9 @@ void ActionSprite::hurtWithDamage(float damage)
 void ActionSprite::knockout()
 {
 	this->stopAllActions();
+	
+	if(this->getHitSprite())this->getHitSprite()->stopAllActions();//停止攻击效果
+	
 	this->runAction(_knockedOutAction);
 	_hitPoints = 0;
 	_actionState = kActionStateKnockedOut;
@@ -66,6 +80,9 @@ void ActionSprite::walkWithDirection(CCPoint direction)
 	if (_actionState == kActionStateIdle)
 	{
 		this->stopAllActions();
+		
+		if(this->getHitSprite())this->getHitSprite()->stopAllActions();//停止攻击效果
+		
 		this->runAction(_walkAction);
 		_actionState = kActionStateWalk;
 	}
@@ -75,10 +92,12 @@ void ActionSprite::walkWithDirection(CCPoint direction)
 		if (_velocity.x >= 0)
 		{
 			this->setScaleX(1.0);
+			if(this->getHitSprite())this->getHitSprite()->setScaleX(1.0);
 		} 
 		else
 		{
 			this->setScaleX(-1.0);
+			if(this->getHitSprite())this->getHitSprite()->setScaleX(-1.0);
 		}
 	}
 }
@@ -112,5 +131,8 @@ void ActionSprite::transformBoxes()
 void ActionSprite::setPosition(CCPoint position)
 {
 	CCSprite::setPosition(position);
+	
+	if(this->getHitSprite())this->getHitSprite()->setPosition(position);//攻击效果
+	
 	this->transformBoxes();
 }

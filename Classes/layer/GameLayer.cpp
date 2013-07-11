@@ -83,6 +83,10 @@ void GameLayer::initHero() {
 	_hero = Ichigo::create();
 
 	_actors->addChild(_hero);
+
+	_actors->addChild(_hero->getHitSprite());//攻击效果
+
+
 	_hero->setPosition(
 			ccp(origin.x + visibleSize.width / 2,
 					origin.y + visibleSize.height / 2 - 100));
