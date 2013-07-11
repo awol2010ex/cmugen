@@ -5,7 +5,7 @@ class Enemy : public ActionSprite
 {
 public:
     //下一次思考时间
-	CC_SYNTHESIZE(long, _nextDecisionTime, NextDecisionTime);
+	CC_SYNTHESIZE(float, _nextDecisionTime, NextDecisionTime);
 
 
 };

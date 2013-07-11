@@ -66,6 +66,9 @@ bool HollowInvasionOne::init() {
 		//步速
 		this->setWalkSpeed(80.0);
 
+
+		_nextDecisionTime =0;
+
 		bRet = true;
 	} while (0);
 

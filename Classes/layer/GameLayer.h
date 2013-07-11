@@ -30,10 +30,15 @@ public:
 
 	//更新操作层
 	void update(float dt);
+	//更新敌人状态
+	void updateEnemys(float dt);
 
 	//更新所有元素位置
 	void updatePositions();
-
+	//更新英雄位置
+	void updateHeroPositions();
+	//更新敌人位置
+	void updateEnemysPositions();
 	//人物居中
 	void setViewpointCenter(cocos2d::CCPoint position);
 

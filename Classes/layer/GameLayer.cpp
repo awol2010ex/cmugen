@@ -1,4 +1,3 @@
-
 #include "layer/GameLayer.h"
 #include "layer/HudLayer.h"
 #include "SimpleAudioEngine.h"
@@ -13,10 +12,13 @@ GameLayer::GameLayer(void) {
 	_hero = NULL;
 	_actors = NULL;
 	_tileMap = NULL;
+	_enemys = NULL;
 }
 
 GameLayer::~GameLayer(void) {
 	this->unscheduleUpdate();
+
+	_enemys =NULL;
 }
 
 // on "init" you need to initialize your instance
@@ -55,17 +57,20 @@ void GameLayer::initTileMap() {
 	_tileMap = CCTMXTiledMap::create("map/0000000_hotel.tmx");
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 	//位置
-	_tileMap->setPosition(origin.x+ visibleSize.width/2-(_tileMap->getContentSize().width/2),origin.y+ visibleSize.height/2-(_tileMap->getContentSize().height/2));
+	_tileMap->setPosition(
+			origin.x + visibleSize.width / 2
+					- (_tileMap->getContentSize().width / 2),
+			origin.y + visibleSize.height / 2
+					- (_tileMap->getContentSize().height / 2));
 
 	CCObject *pObject = NULL;
-		CCARRAY_FOREACH(_tileMap->getChildren(), pObject)
-		{
-			CCTMXLayer *child = (CCTMXLayer*) pObject;
-			child->getTexture()->setAliasTexParameters();
-		}
-
+	CCARRAY_FOREACH(_tileMap->getChildren(), pObject)
+	{
+		CCTMXLayer *child = (CCTMXLayer*) pObject;
+		child->getTexture()->setAliasTexParameters();
+	}
 
 	this->addChild(_tileMap, -6);
 }
@@ -76,7 +81,9 @@ void GameLayer::initHero() {
 	_hero = Ichigo::create();
 
 	_actors->addChild(_hero);
-	_hero->setPosition(ccp(origin.x+ visibleSize.width/2 ,origin.y+ visibleSize.height/2 -100));
+	_hero->setPosition(
+			ccp(origin.x + visibleSize.width / 2,
+					origin.y + visibleSize.height / 2 - 100));
 	_hero->setDesiredPosition(_hero->getPosition());
 	//站立
 	_hero->idle();
@@ -84,26 +91,26 @@ void GameLayer::initHero() {
 }
 
 //初始化敌人
-void GameLayer::initEnemys(){
-	_enemys =CCArray::createWithCapacity(20);//敌人列表
-
+void GameLayer::initEnemys() {
+	_enemys = CCArray::createWithCapacity(1); //敌人列表
+	_enemys->retain();
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
 	//敌人
-	HollowInvasionOne *_hollowInvasionOne =HollowInvasionOne::create();
-	_hollowInvasionOne->setPosition(ccp(origin.x+ visibleSize.width / 2+190,
-			origin.y +visibleSize.height / 2 - 100));// 位置
+	HollowInvasionOne *_hollowInvasionOne = HollowInvasionOne::create();
+	_hollowInvasionOne->setPosition(
+			ccp(origin.x + visibleSize.width / 2 + 190,
+					origin.y + visibleSize.height / 2 - 100)); // 位置
 
-	_hollowInvasionOne->setDesiredPosition( _hollowInvasionOne->getPosition() );
-    _hollowInvasionOne->setWalkSpeed(80);// 步速
+	_hollowInvasionOne->setDesiredPosition(_hollowInvasionOne->getPosition());
+	_hollowInvasionOne->setWalkSpeed(80); // 步速
 
-    _enemys->addObject(_hollowInvasionOne);
+	_enemys->addObject(_hollowInvasionOne);
 
-    _actors->addChild(_hollowInvasionOne);
+	_actors->addChild(_hollowInvasionOne);
 
-
-    _hollowInvasionOne->idle();
+	_hollowInvasionOne->idle();
 }
 
 //方向
@@ -112,7 +119,8 @@ void GameLayer::didChangeDirectionTo(SneakyJoystickExt *joystick,
 	_hero->walkWithDirection(direction);
 }
 //按住
-void GameLayer::isHoldingDirection(SneakyJoystickExt *joystick, CCPoint direction) {
+void GameLayer::isHoldingDirection(SneakyJoystickExt *joystick,
+		CCPoint direction) {
 	_hero->walkWithDirection(direction);
 }
 //按完站立
@@ -124,8 +132,12 @@ void GameLayer::simpleJoystickTouchEnded(SneakyJoystickExt *joystick) {
 //实时更新
 void GameLayer::update(float dt) {
 	_hero->update(dt);
-	this->updatePositions();//更新所有元素位置
-	this->reorderActors();//前后排序
+
+	//更新敌人状态
+	this->updateEnemys(dt);
+
+	this->updatePositions(); //更新所有元素位置
+	this->reorderActors(); //前后排序
 	this->setViewpointCenter(_hero->getPosition());
 }
 //地图位置
@@ -143,37 +155,53 @@ CCPoint GameLayer::tileCoordForPosition(CCPoint pos) {
 }
 //更新位置
 void GameLayer::updatePositions() {
-	float posX = MIN(
-			_tileMap->getMapSize().width * _tileMap->getTileSize().width
-					- _hero->getCenterToSides()  +_tileMap->getPositionX(),
-			MAX(_hero->getCenterToSides()+_tileMap->getPositionX(),
-					_hero->getDesiredPosition().x));
-	float posY = MIN(
-			_tileMap->getMapSize().height * _tileMap->getTileSize().height
-					- _hero->getCenterToBottom() +_tileMap->getPositionY(),
-			MAX(_hero->getCenterToBottom()+_tileMap->getPositionY(),
-					_hero->getDesiredPosition().y));
 
-	CCTMXLayer* wall = _tileMap->layerNamed("wall");
-	/* 获得当前主角在地图中的格子位置 */
-	CCPoint tiledPos = this->tileCoordForPosition(ccp(posX, posY));
-	/* 获取地图格子的唯一标识 */
-	int tiledGid = wall->tileGIDAt(tiledPos);
-	//LOGD(CCString::createWithFormat("tiledGid%d", tiledGid)->getCString());
-	if (tiledGid != 0) {
-
-	} else {
-		_hero->setPosition(ccp(posX, posY));
-	}
-
+    this->updateHeroPositions();//更新英雄位置
+    this->updateEnemysPositions();//更新敌人位置
 }
+//更新英雄位置
+void GameLayer::updateHeroPositions(){
+	float posX = MIN(
+				_tileMap->getMapSize().width * _tileMap->getTileSize().width
+						- _hero->getCenterToSides() + _tileMap->getPositionX(),
+				MAX(_hero->getCenterToSides() + _tileMap->getPositionX(),
+						_hero->getDesiredPosition().x));
+		float posY = MIN(
+				_tileMap->getMapSize().height * _tileMap->getTileSize().height
+						- _hero->getCenterToBottom() + _tileMap->getPositionY(),
+				MAX(_hero->getCenterToBottom() + _tileMap->getPositionY(),
+						_hero->getDesiredPosition().y));
 
+		CCTMXLayer* wall = _tileMap->layerNamed("wall");
+		/* 获得当前主角在地图中的格子位置 */
+		CCPoint tiledPos = this->tileCoordForPosition(ccp(posX, posY));
+		/* 获取地图格子的唯一标识 */
+		int tiledGid = wall->tileGIDAt(tiledPos);
+		//LOGD(CCString::createWithFormat("tiledGid%d", tiledGid)->getCString());
+		if (tiledGid != 0) {
+
+		} else {
+			_hero->setPosition(ccp(posX, posY));
+		}
+}
+//更新敌人位置
+void GameLayer::updateEnemysPositions(){
+	    CCObject *pObject = NULL;
+		CCARRAY_FOREACH(_enemys, pObject)
+		{
+			Enemy *_enemy = (Enemy*) pObject;
+			_enemy->setPosition(_enemy->getDesiredPosition());
+		}
+}
 //更新地图位置
 void GameLayer::setViewpointCenter(CCPoint position) {
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    if(_tileMap->getMapSize().height * _tileMap->getTileSize().height <winSize.height && _tileMap->getMapSize().width * _tileMap->getTileSize().width <winSize.width ){
-    	return;
-    }
+	if (_tileMap->getMapSize().height * _tileMap->getTileSize().height
+			< winSize.height
+			&& _tileMap->getMapSize().width * _tileMap->getTileSize().width
+					< winSize.width) {
+		return;
+	}
 	int x = MAX(position.x, winSize.width / 2);
 	int y = MAX(position.y, winSize.height / 2);
 	x = MIN(x,
@@ -201,17 +229,83 @@ void GameLayer::reorderActors() {
 }
 
 //按方向行走
-void GameLayer::setMoveDirection(cocos2d::CCPoint _direction)
-{
+void GameLayer::setMoveDirection(cocos2d::CCPoint _direction) {
 	mDirection = _direction;
-
 
 }
 //按A键攻击
-void GameLayer::setInBtnState(InBtnState pBtnState)
+void GameLayer::setInBtnState(InBtnState pBtnState) {
+	if (pBtnState == IN_BTN_PRESSED) {
+		_hero->attack();
+	}
+
+}
+//更新敌人状态
+void GameLayer::updateEnemys(float dt) {
+	float distanceSQ =0; //距离
+	int randomChoice = 0;
+	CCObject *pObject = NULL;
+
+	Enemy *_enemy  =NULL;
+	int p=0;
+	CCARRAY_FOREACH(_enemys, pObject)
 	{
-		if( pBtnState==IN_BTN_PRESSED){
-			_hero->attack();
+		_enemy= dynamic_cast<Enemy*>( pObject);
+		_enemy->update(dt);
+
+		if (_enemy->getActionState() != kActionStateKnockedOut){//还没死
+
+
+			//2
+			if (CURTIME > _enemy->getNextDecisionTime()) {
+							distanceSQ = ccpDistanceSQ(_enemy->getPosition(),
+									_hero->getPosition());
+
+							if (_hero->getPosition().x > _enemy->getPosition().x) {
+								_enemy->setScaleX(1.0);
+							} else {
+								_enemy->setScaleX(-1.0);
+							}
+							//3
+							if (distanceSQ <= 50 * 50) {
+
+
+
+								_enemy->setNextDecisionTime(
+										CURTIME + frandom_range(0.1, 0.5) * 1000.0);
+								randomChoice = random_range(0, 1);
+
+
+
+								if (randomChoice == 0) {
+
+
+									//4
+									_enemy->setNextDecisionTime(_enemy->getNextDecisionTime() + frandom_range(0.1, 0.5) * 2000);
+
+								} else {
+									_enemy->idle();
+								}
+							}else if (distanceSQ <= SCREEN.width * SCREEN.width)
+							{
+
+								//5
+								_enemy->setNextDecisionTime(
+										CURTIME + frandom_range(0.5, 1.0) * 1000.0);
+								randomChoice = random_range(0, 2);
+								if (randomChoice == 0) {
+									CCPoint moveDirection = ccpNormalize(
+											ccpSub(_hero->getPosition(),
+													_enemy->getPosition()));
+									_enemy->walkWithDirection(moveDirection);
+								} else {
+									_enemy->idle();
+								}
+							}
+			}
+
 		}
 
 	}
+
+}
