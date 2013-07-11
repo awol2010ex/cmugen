@@ -43,7 +43,7 @@ bool HollowInvasionOne::init() {
 		
 		
 		// walk
-		for ( int i = 0; i < 6; i++) {
+		for ( int i = 0; i < 5; i++) {
 			frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(
 					 CCString::createWithFormat("HollowInvasionOne_walk%d.png", i)->getCString());
 

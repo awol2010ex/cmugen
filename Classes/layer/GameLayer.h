@@ -2,6 +2,7 @@
 #include "cocos2d.h"
 #include "sprite/Ichigo.h"
 #include "sprite/Enemy.h"
+#include "sprite/HollowInvasionOne.h"
 #include "Sneaky/SneakyJoystickExt.h"
 #include "layer/HudLayer.h"
 class GameLayer: public cocos2d::CCLayer,
@@ -16,16 +17,27 @@ public:
 	void initTileMap();
 	//精灵初始化
 	void initHero();
+
+	//初始化敌人
+	void initEnemys();
 	//摇杆代理
 	virtual void didChangeDirectionTo(SneakyJoystickExt *joystick,
 			cocos2d::CCPoint direction);
 	virtual void isHoldingDirection(SneakyJoystickExt *joystick,
 			cocos2d::CCPoint direction);
 	virtual void simpleJoystickTouchEnded(SneakyJoystickExt *joystick);
+    //
 
+	//更新操作层
 	void update(float dt);
+
+	//更新所有元素位置
 	void updatePositions();
+
+	//人物居中
 	void setViewpointCenter(cocos2d::CCPoint position);
+
+	//对元素Z order 排序
 	void reorderActors();
 
 	cocos2d::CCPoint tileCoordForPosition(cocos2d::CCPoint pos); //地图坐标
@@ -40,4 +52,7 @@ public:
 	cocos2d::CCPoint mDirection;
 
 	void setInBtnState(InBtnState pBtnState);
+
+	//敌人列表
+	cocos2d::CCArray  *_enemys;
 };

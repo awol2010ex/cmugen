@@ -37,6 +37,8 @@ bool GameLayer::init() {
 
 		//初始化精灵
 		this->initHero();
+		//敌人初始化
+		this->initEnemys();
 
 		this->scheduleUpdate();
 		bRet = true;
@@ -70,7 +72,7 @@ void GameLayer::initTileMap() {
 //精灵初始化
 void GameLayer::initHero() {
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-	    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 	_hero = Ichigo::create();
 
 	_actors->addChild(_hero);
@@ -79,6 +81,29 @@ void GameLayer::initHero() {
 	//站立
 	_hero->idle();
 
+}
+
+//初始化敌人
+void GameLayer::initEnemys(){
+	_enemys =CCArray::createWithCapacity(20);//敌人列表
+
+	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+
+	//敌人
+	HollowInvasionOne *_hollowInvasionOne =HollowInvasionOne::create();
+	_hollowInvasionOne->setPosition(ccp(origin.x+ visibleSize.width / 2+190,
+			origin.y +visibleSize.height / 2 - 100));// 位置
+
+	_hollowInvasionOne->setDesiredPosition( _hollowInvasionOne->getPosition() );
+    _hollowInvasionOne->setWalkSpeed(80);// 步速
+
+    _enemys->addObject(_hollowInvasionOne);
+
+    _actors->addChild(_hollowInvasionOne);
+
+
+    _hollowInvasionOne->idle();
 }
 
 //方向
