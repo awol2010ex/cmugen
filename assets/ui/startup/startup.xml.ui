@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<UIProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>startup</Name>
+  <ProjectDir>G:\android\cocos2dx_v2.1.4e\cocos2dx_v2.1.4e\CMUGEN\proj.android\assets\ui\startup</ProjectDir>
+  <SceneJson>startup.json</SceneJson>
+  <Resources>G:\android\cocos2dx_v2.1.4e\cocos2dx_v2.1.4e\CMUGEN\proj.android\assets\ui\startup\Resources</Resources>
+  <JsonFolder>G:\android\cocos2dx_v2.1.4e\cocos2dx_v2.1.4e\CMUGEN\proj.android\assets\ui\startup\Json</JsonFolder>
+  <JsonList>
+    <string>startup_1.json</string>
+  </JsonList>
+  <imageFileList />
+  <bBatchImage>false</bBatchImage>
+  <JsonSuffix>.json</JsonSuffix>
+  <CanvasSize>
+    <Width>960</Width>
+    <Height>640</Height>
+  </CanvasSize>
+  <CurrentUIJson>startup_1.json</CurrentUIJson>
+</UIProject>
