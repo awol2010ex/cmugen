@@ -8,12 +8,14 @@
   <JsonList>
     <string>startup_1.json</string>
   </JsonList>
-  <imageFileList />
+  <imageFileList>
+    <string>startup0.plist</string>
+  </imageFileList>
   <bBatchImage>false</bBatchImage>
   <JsonSuffix>.json</JsonSuffix>
   <CanvasSize>
-    <Width>960</Width>
-    <Height>640</Height>
+    <Width>1024</Width>
+    <Height>768</Height>
   </CanvasSize>
   <CurrentUIJson>startup_1.json</CurrentUIJson>
 </UIProject>

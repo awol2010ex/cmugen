@@ -1,6 +1,7 @@
 #include "CCEGLView.h"
 #include "AppDelegate.h"
 #include "scene/GameScene.h"
+#include "scene/StartupScene.h"
 #include "SimpleAudioEngine.h"
 
 USING_NS_CC;
@@ -22,7 +23,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
 
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(800, 600,kResolutionNoBorder);
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(1024, 768,kResolutionNoBorder);
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
@@ -30,7 +31,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    CCScene *pScene = GameScene::create();
+    CCScene *pScene = StartupScene::create();
 
     // run
     pDirector->runWithScene(pScene);
