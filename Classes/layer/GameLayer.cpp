@@ -62,10 +62,9 @@ void GameLayer::initTileMap() {
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
-	_tileMap->setScale(_tileMap->getContentSize().height / visibleSize.height);
 
 	//位置
-	_tileMap->setPosition(0,0);
+	_tileMap->setPosition(origin.x+visibleSize.width/2-_tileMap->getContentSize().width/2 ,origin.y+visibleSize.height/2-_tileMap->getContentSize().height/2);
 
 	CCObject *pObject = NULL;
 	CCARRAY_FOREACH(_tileMap->getChildren(), pObject)

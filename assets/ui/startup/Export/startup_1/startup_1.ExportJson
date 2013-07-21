@@ -40,7 +40,7 @@
           "scaleX": 1.06113541,
           "scaleY": 1.08064508,
           "tag": 17,
-          "touchAble": false,
+          "touchAble": true,
           "useMergedTexture": true,
           "visible": true,
           "width": 243.000015,

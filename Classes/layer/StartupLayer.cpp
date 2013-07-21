@@ -1,4 +1,5 @@
 #include "layer/StartupLayer.h"
+#include "scene/GameScene.h"
 #include "SimpleAudioEngine.h"
 #include <android/log.h>
 
@@ -30,6 +31,14 @@ bool StartupLayer::init() {
 				coco_releaseselector(StartupLayer::closeCallback));
 
 
+		//开始游戏按钮
+				UIButton* playerButton = dynamic_cast<UIButton*>(this->getWidgetByName(
+						"playerButton"));
+				playerButton->addReleaseEvent(this,
+						coco_releaseselector(StartupLayer::playCallback));
+
+
+
 
 		bRet = true;
 	} while (0);
@@ -46,4 +55,10 @@ void StartupLayer::closeCallback(CCObject* pSender) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
 #endif
+}
+
+
+//开始游戏按钮
+void StartupLayer::playCallback(CCObject* pSender) {
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(float(1.2), GameScene::create()));
 }

@@ -14,4 +14,7 @@ public:
 	//关闭按钮
 // a selector callback
 	void closeCallback(CCObject* pSender);
+	
+	//开始游戏按钮
+	void playCallback(CCObject* pSender);
 };
