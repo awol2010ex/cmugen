@@ -83,6 +83,7 @@ void GameLayer::initHero() {
 
 	_actors->addChild(_hero);
 
+	if (_hero->getHitSprite())
 	_actors->addChild(_hero->getHitSprite());//攻击效果
 
 

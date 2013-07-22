@@ -24,6 +24,8 @@ void ActionSprite::idle()
 	if (_actionState != kActionStateIdle)
 	{
 		this->stopAllActions();
+
+
 		this->runAction(_idleAction);
 		_actionState = kActionStateIdle;
 		_velocity = CCPointZero;

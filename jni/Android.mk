@@ -13,6 +13,7 @@ LOCAL_SRC_FILES := cmugen/main.cpp \
                    ../Classes/layer/StartupLayer.cpp \
                    ../Classes/sprite/ActionSprite.cpp \
                    ../Classes/sprite/Ichigo.cpp \
+                   ../Classes/sprite/Saber.cpp \
                    ../Classes/sprite/HollowInvasionOne.cpp \
                    ../Classes/scene/StartupScene.cpp \
                    ../Classes/scene/GameScene.cpp \

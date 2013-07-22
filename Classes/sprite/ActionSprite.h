@@ -23,11 +23,11 @@ public:
 	void setPosition(cocos2d::CCPoint position);
 
 	//actions
-	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _idleAction, IdleAction);
-	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _attackAction, AttackAction);
-	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _walkAction, WalkAction);
-	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _hurtAction, HurtAction);
-	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _knockedOutAction, KnockedOutAction);
+	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _idleAction, IdleAction);//站立动作
+	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _attackAction, AttackAction);//攻击动作
+	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _walkAction, WalkAction);//行走动作
+	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _hurtAction, HurtAction);//受伤动作
+	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _knockedOutAction, KnockedOutAction);//倒下动作
 	
 	//攻击效果
 	CC_SYNTHESIZE_RETAIN(cocos2d::CCAction*, _attackHitAction, AttackHitAction);

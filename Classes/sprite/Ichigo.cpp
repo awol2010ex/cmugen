@@ -8,6 +8,30 @@ Ichigo::Ichigo(void) {
 Ichigo::~Ichigo(void) {
 }
 
+//生成站立动作
+CCAction* Ichigo::createIdleAction() {
+	CCSpriteFrame *frame = NULL;
+	//idle animation
+	CCArray *idleFrames = CCArray::createWithCapacity(83);
+
+	// idle
+	for (int i = 0; i < 83; i++) {
+
+		frame =
+				CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(
+						CCString::createWithFormat("ichigo_idle%d.png", i)->getCString());
+
+		//frame->setOffset(CCPointMake(-31, 101));
+
+		idleFrames->addObject(frame);
+	}
+
+	CCAnimation *idleAnimation = CCAnimation::createWithSpriteFrames(idleFrames,
+			float(1.0 / 12.0));
+
+
+	return CCRepeatForever::create(CCAnimate::create(idleAnimation));
+}
 bool Ichigo::init() {
 	CCSpriteFrame *frame = NULL;
 	bool bRet = false;
@@ -15,25 +39,8 @@ bool Ichigo::init() {
 		//初始
 		CC_BREAK_IF(!ActionSprite::initWithSpriteFrameName("ichigo_idle0.png"));
 
-		//idle animation
-		CCArray *idleFrames = CCArray::createWithCapacity(83);
-
-		// idle
-		for (int i = 0; i < 83; i++) {
-
-			frame =
-					CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(
-							CCString::createWithFormat("ichigo_idle%d.png", i)->getCString());
-
-			//frame->setOffset(CCPointMake(-31, 101));
-
-			idleFrames->addObject(frame);
-		}
-
-		CCAnimation *idleAnimation = CCAnimation::createWithSpriteFrames(
-				idleFrames, float(1.0 / 12.0));
-		this->setIdleAction(
-				CCRepeatForever::create(CCAnimate::create(idleAnimation)));
+		//站立动作
+		this->setIdleAction(Ichigo::createIdleAction());
 
 		//walk animation
 		CCArray *walkFrames = CCArray::createWithCapacity(8);
@@ -109,16 +116,15 @@ bool Ichigo::init() {
 		emptyFrame->setRect(CCRectMake(0, 0, 0, 0));
 		attackHitFrames->addObject(emptyFrame);
 
-
 		//攻击效果
 		CCAnimation *attackHitAnimation = CCAnimation::createWithSpriteFrames(
 				attackHitFrames, float(1.0 / 12.0));
 
 		this->setAttackHitAction(
 				CCSequence::create(CCDelayTime::create(float(2.0 / 12.0)),
-						CCAnimate::create(attackHitAnimation)  ,NULL));
+						CCAnimate::create(attackHitAnimation), NULL));
 
-		this->setHitSprite( CCSprite::createWithSpriteFrame(emptyFrame) ); // 攻击效果初始空白
+		this->setHitSprite(CCSprite::createWithSpriteFrame(emptyFrame)); // 攻击效果初始空白
 
 		//中心距离
 		this->setCenterToBottom(35.0);

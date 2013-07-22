@@ -11,6 +11,7 @@ public:
 	CREATE_FUNC(Ichigo);
 	bool init();
 	void knockout();
-
-
+	
+	//生成站立动作
+	static CCAction*  createIdleAction();
 };
