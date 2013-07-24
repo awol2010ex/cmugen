@@ -11,7 +11,7 @@
   <imageFileList>
     <string>startup0.plist</string>
   </imageFileList>
-  <bBatchImage>false</bBatchImage>
+  <bBatchImage>true</bBatchImage>
   <JsonSuffix>.json</JsonSuffix>
   <CanvasSize>
     <Width>1024</Width>

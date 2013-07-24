@@ -22,12 +22,7 @@ bool GameScene::init() {
 	do {
 		CC_BREAK_IF(!CCScene::init());
 
-		//精灵图
-		CCSpriteFrameCache* cache =
-					CCSpriteFrameCache::sharedSpriteFrameCache();
-		cache->addSpriteFramesWithFile("sprite/cnf.plist", "sprite/cnf.pvr.ccz");
-		//UI图
-		cache->addSpriteFramesWithFile("UI.plist", "UI.png");
+
 
 
 		//游戏层

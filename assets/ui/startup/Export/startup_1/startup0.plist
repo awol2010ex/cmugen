@@ -7,13 +7,13 @@
 			<key>play_button.png</key>
 			<dict>
 				<key>width</key>
-				<integer>229</integer>
+				<integer>504</integer>
 				<key>height</key>
-				<integer>124</integer>
+				<integer>208</integer>
 				<key>originalWidth</key>
-				<integer>229</integer>
+				<integer>504</integer>
 				<key>originalHeight</key>
-				<integer>124</integer>
+				<integer>208</integer>
 				<key>x</key>
 				<integer>0</integer>
 				<key>y</key>
@@ -34,7 +34,7 @@
 				<key>originalHeight</key>
 				<integer>40</integer>
 				<key>x</key>
-				<integer>231</integer>
+				<integer>506</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>
@@ -53,45 +53,7 @@
 				<key>originalHeight</key>
 				<integer>40</integer>
 				<key>x</key>
-				<integer>273</integer>
-				<key>y</key>
-				<integer>0</integer>
-				<key>offsetX</key>
-				<real>0</real>
-				<key>offsetY</key>
-				<real>0</real>
-			</dict>
-			<key>saber_icon.png</key>
-			<dict>
-				<key>width</key>
-				<integer>125</integer>
-				<key>height</key>
-				<integer>150</integer>
-				<key>originalWidth</key>
-				<integer>125</integer>
-				<key>originalHeight</key>
-				<integer>150</integer>
-				<key>x</key>
-				<integer>315</integer>
-				<key>y</key>
-				<integer>0</integer>
-				<key>offsetX</key>
-				<real>0</real>
-				<key>offsetY</key>
-				<real>0</real>
-			</dict>
-			<key>ichigo_icon.png</key>
-			<dict>
-				<key>width</key>
-				<integer>120</integer>
-				<key>height</key>
-				<integer>140</integer>
-				<key>originalWidth</key>
-				<integer>120</integer>
-				<key>originalHeight</key>
-				<integer>140</integer>
-				<key>x</key>
-				<integer>442</integer>
+				<integer>548</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>

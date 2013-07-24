@@ -26,21 +26,19 @@ bool StartupLayer::init() {
 		this->addWidget(
 				CCUIHELPER->createWidgetFromJsonFile(
 						"ui/startup/Export/startup_1/startup_1.ExportJson"));
+
+
 		//关闭按钮
 		UIButton* closeButton = dynamic_cast<UIButton*>(this->getWidgetByName(
 				"closeButton"));
 		closeButton->addReleaseEvent(this,
 				coco_releaseselector(StartupLayer::closeCallback));
 
-
 		//开始游戏按钮
-				UIButton* playerButton = dynamic_cast<UIButton*>(this->getWidgetByName(
-						"playerButton"));
-				playerButton->addReleaseEvent(this,
-						coco_releaseselector(StartupLayer::playCallback));
-
-
-
+		UIButton* playButton = dynamic_cast<UIButton*>(this->getWidgetByName(
+				"playButton"));
+		playButton->addReleaseEvent(this,
+				coco_releaseselector(StartupLayer::playCallback));
 
 		bRet = true;
 	} while (0);
@@ -59,8 +57,8 @@ void StartupLayer::closeCallback(CCObject* pSender) {
 #endif
 }
 
-
 //开始游戏按钮
 void StartupLayer::playCallback(CCObject* pSender) {
-	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(float(1.2), GameScene::create()));
+	CCDirector::sharedDirector()->replaceScene(
+			CCTransitionFade::create(float(1.2), GameScene::create()));
 }
