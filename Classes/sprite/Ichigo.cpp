@@ -78,7 +78,7 @@ bool Ichigo::init() {
 		}
 
 		CCAnimation *attackAnimation = CCAnimation::createWithSpriteFrames(
-				attackFrames, float(1.0 / 12.0));
+				attackFrames, float(1.0 / 60.0));
 		this->setAttackAction(
 				CCSequence::create(CCAnimate::create(attackAnimation),
 						CCCallFunc::create(this,
@@ -118,10 +118,10 @@ bool Ichigo::init() {
 
 		//攻击效果
 		CCAnimation *attackHitAnimation = CCAnimation::createWithSpriteFrames(
-				attackHitFrames, float(1.0 / 12.0));
+				attackHitFrames, float(1.0 / 60.0));
 
 		this->setAttackHitAction(
-				CCSequence::create(CCDelayTime::create(float(2.0 / 12.0)),
+				CCSequence::create(CCDelayTime::create(float(2.0 / 60.0)),
 						CCAnimate::create(attackHitAnimation), NULL));
 
 		this->setHitSprite(CCSprite::createWithSpriteFrame(emptyFrame)); // 攻击效果初始空白

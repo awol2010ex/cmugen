@@ -43,7 +43,7 @@
           "touchAble": false,
           "useMergedTexture": true,
           "visible": true,
-          "width": 90,
+          "width": 60,
           "x": 416,
           "xProportion": 416,
           "y": 587,
@@ -51,7 +51,7 @@
           "fontName": "宋体",
           "fontSize": 20,
           "fontType": 0,
-          "text": "User Name",
+          "text": "用户名",
           "touchSacleEnable": false
         }
       },
