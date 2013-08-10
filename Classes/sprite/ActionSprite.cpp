@@ -57,12 +57,14 @@ void ActionSprite::hurtWithDamage(float damage)
 		this->stopAllActions();
 		this->runAction(_hurtAction);
 		_actionState = kActionStateHurt;
+		/*
 		_hitPoints -= damage;
 
 		if (_hitPoints <= 0)
 		{
 			this->knockout();
 		}
+		*/
 	}
 }
 

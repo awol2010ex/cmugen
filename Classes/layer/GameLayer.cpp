@@ -62,9 +62,12 @@ void GameLayer::initTileMap() {
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
-
 	//位置
-	_tileMap->setPosition(origin.x+visibleSize.width/2-_tileMap->getContentSize().width/2 ,origin.y+visibleSize.height/2-_tileMap->getContentSize().height/2);
+	_tileMap->setPosition(
+			origin.x + visibleSize.width / 2
+					- _tileMap->getContentSize().width / 2,
+			origin.y + visibleSize.height / 2
+					- _tileMap->getContentSize().height / 2);
 
 	CCObject *pObject = NULL;
 	CCARRAY_FOREACH(_tileMap->getChildren(), pObject)
@@ -84,8 +87,7 @@ void GameLayer::initHero() {
 	_actors->addChild(_hero);
 
 	if (_hero->getHitSprite())
-	_actors->addChild(_hero->getHitSprite());//攻击效果
-
+		_actors->addChild(_hero->getHitSprite()); //攻击效果
 
 	_hero->setPosition(
 			ccp(origin.x + visibleSize.width / 2,
@@ -198,27 +200,28 @@ void GameLayer::updateEnemysPositions() {
 		Enemy *_enemy = (Enemy*) pObject;
 		//_enemy->setPosition(_enemy->getDesiredPosition());
 		float posX = MIN(
-					_tileMap->getMapSize().width * _tileMap->getTileSize().width
-							- _enemy->getCenterToSides() + _tileMap->getPositionX(),
-					MAX(_enemy->getCenterToSides() + _tileMap->getPositionX(),
-							_enemy->getDesiredPosition().x));
-			float posY = MIN(
-					_tileMap->getMapSize().height * _tileMap->getTileSize().height
-							- _enemy->getCenterToBottom() + _tileMap->getPositionY(),
-					MAX(_enemy->getCenterToBottom() + _tileMap->getPositionY(),
-							_enemy->getDesiredPosition().y));
+				_tileMap->getMapSize().width * _tileMap->getTileSize().width
+						- _enemy->getCenterToSides() + _tileMap->getPositionX(),
+				MAX(_enemy->getCenterToSides() + _tileMap->getPositionX(),
+						_enemy->getDesiredPosition().x));
+		float posY = MIN(
+				_tileMap->getMapSize().height * _tileMap->getTileSize().height
+						- _enemy->getCenterToBottom()
+						+ _tileMap->getPositionY(),
+				MAX(_enemy->getCenterToBottom() + _tileMap->getPositionY(),
+						_enemy->getDesiredPosition().y));
 
-			CCTMXLayer* wall = _tileMap->layerNamed("wall");
-			/* 获得当前主角在地图中的格子位置 */
-			CCPoint tiledPos = this->tileCoordForPosition(ccp(posX, posY));
-			/* 获取地图格子的唯一标识 */
-			int tiledGid = wall->tileGIDAt(tiledPos);
-			//LOGD(CCString::createWithFormat("tiledGid%d", tiledGid)->getCString());
-			if (tiledGid != 0) {
+		CCTMXLayer* wall = _tileMap->layerNamed("wall");
+		/* 获得当前主角在地图中的格子位置 */
+		CCPoint tiledPos = this->tileCoordForPosition(ccp(posX, posY));
+		/* 获取地图格子的唯一标识 */
+		int tiledGid = wall->tileGIDAt(tiledPos);
+		//LOGD(CCString::createWithFormat("tiledGid%d", tiledGid)->getCString());
+		if (tiledGid != 0) {
 
-			} else {
-				_enemy->setPosition(ccp(posX, posY));
-			}
+		} else {
+			_enemy->setPosition(ccp(posX, posY));
+		}
 	}
 }
 //更新地图位置
@@ -265,6 +268,14 @@ void GameLayer::setMoveDirection(cocos2d::CCPoint _direction) {
 void GameLayer::setInBtnState(InBtnState pBtnState) {
 	if (pBtnState == IN_BTN_PRESSED) {
 		_hero->attack();
+		Enemy *_enemy = NULL;
+		CCObject *pObject = NULL;
+		CCARRAY_FOREACH(_enemys, pObject)
+		{
+			_enemy = dynamic_cast<Enemy*>(pObject);
+
+			_enemy->hurtWithDamage(10);
+		}
 	}
 
 }
