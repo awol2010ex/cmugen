@@ -274,7 +274,10 @@ void GameLayer::setInBtnState(InBtnState pBtnState) {
 		{
 			_enemy = dynamic_cast<Enemy*>(pObject);
 
-			_enemy->hurtWithDamage(10);
+
+			if (_enemy->getActionState() != kActionStateKnockedOut) {
+				_enemy->hurtWithDamage(10);
+			}
 		}
 	}
 
